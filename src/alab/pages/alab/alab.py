@@ -83,7 +83,7 @@ class Alab(MPShipsApp): # Required for MPShips functionality — do not remove
                                                     id="experiment-selector",
                                                     options=[
                                                         {
-                                                            "label": f"{exp['identifier']} - {exp.get('target_formula', 'N/A')}",
+                                                            "label": f"{exp['identifier']} - {exp.get('formula', 'N/A')}",
                                                             "value": exp["identifier"],
                                                         }
                                                         for exp in experiment_list

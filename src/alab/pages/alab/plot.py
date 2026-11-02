@@ -92,13 +92,13 @@ def create_temperature_chart(data):
     if not data:
         return None
 
-    time_hours = [float(t) / 60 for t in data.get("time").values()]
+    time_mins = [float(t) / 60 for t in data.get("time").values()]
     temperatures = [float(t) for t in data.get("temperature").values()]
 
     fig = go.Figure()
     fig.add_trace(
         go.Scatter(
-            x=time_hours,
+            x=time_mins,
             y=temperatures,
             mode="lines",
             line=dict(color="#f97316", width=3),
@@ -107,7 +107,7 @@ def create_temperature_chart(data):
     )
 
     fig.update_layout(
-        xaxis_title="Time (hours)",
+        xaxis_title="Time (mins)",
         yaxis_title="Temperature (°C)",
         height=400,
         hovermode="x unified",

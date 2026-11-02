@@ -5,7 +5,7 @@ from .utils import parse_formula
 def load_experiment_list():
     """Load list of all experiments from Parquet data"""
     try:
-        kwargs = {"fields": ["identifier"]}
+        kwargs = {"fields": ["identifier", "formula"]}
         exp_list = (
             get_rester(project="A_Lab").contribs.query_contributions(**kwargs).data
         )
