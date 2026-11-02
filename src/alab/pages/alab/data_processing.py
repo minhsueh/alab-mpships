@@ -1,6 +1,7 @@
 from mpships_infra import get_rester
 from .utils import parse_formula
 
+import time
 
 def load_experiment_list():
     """Load list of all experiments from Parquet data"""
@@ -28,7 +29,7 @@ def load_experiment_data(experiment_name):
 
     # get "Sample preparation", "Heating", and "Characterization" tables
     table_field_map = {
-        "Sample preparation": "_sample_preparation",
+        "Sample preparation": "_sample_preparation", 
         "Heating": "_heating",
         "Characterization": "_characterization"
     }
@@ -37,9 +38,8 @@ def load_experiment_data(experiment_name):
         table_name = table["name"]
         if table_name in table_field_map:
             table_md5 = table["md5"]
-            raw_data[table_field_map[table_name]] = (
-                get_rester(project="A_Lab").contribs.get_table(table_md5).to_dict()
-            )
+            temp = get_rester(project="A_Lab").contribs.get_table(table_md5)
+            raw_data[table_field_map[table_name]] = temp.to_dict()
 
     # Parse formula
     target = raw_data.get("formula", {})
@@ -54,9 +54,6 @@ def load_experiment_data(experiment_name):
 
 
     return raw_data
-
-    # sample_data = analyze_data(raw_data)
-    # return sample_data, raw_data, None
 
 
 def analyze_data(raw_data):

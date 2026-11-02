@@ -700,6 +700,28 @@ def get_xrd_card(raw_data, xrd_chart):
                                                     dbc.CardBody(
                                                         [
                                                             html.P(
+                                                                "XRD source",
+                                                                className="small text-muted mb-1",
+                                                            ),
+                                                            html.P(
+                                                                f"{raw_data.get("_characterization", {}).get("xrdSource", ["-"])[0]}",
+                                                                className="h6 mb-0",
+                                                            ),
+                                                        ]
+                                                    )
+                                                ],
+                                                className="bg-light border-0",
+                                            )
+                                        ],
+                                        md=3,
+                                    ),
+                                    dbc.Col(
+                                        [
+                                            dbc.Card(
+                                                [
+                                                    dbc.CardBody(
+                                                        [
+                                                            html.P(
                                                                 "Data Points",
                                                                 className="small text-muted mb-1",
                                                             ),
