@@ -444,7 +444,7 @@ def get_precursor_card(raw_data):
                                                 className="text-end",
                                             ),
                                             html.Th(
-                                                "Accuracy", className="text-end"
+                                                "Relative Deviation", className="text-end"
                                             ),
                                         ]
                                     )
@@ -467,7 +467,7 @@ def get_precursor_card(raw_data):
                                                 className="font-monospace text-end",
                                             ),
                                             html.Td(
-                                                f"{v:.2f}%" if (v := raw_data.get("_sample_preparation", {}).get("doseAccuracyPercent", {}).get(idx)) is not None else "-",
+                                                f"{v-100:.4f}%" if (v := raw_data.get("_sample_preparation", {}).get("doseAccuracyPercent", {}).get(idx)) is not None else "-",
                                                 className=f"fw-semibold text-end",
                                             ),
                                         ]
@@ -1030,6 +1030,23 @@ def get_references_card():
     )
 
 
+def experimental_warning_card(**card_kwargs) -> dbc.Card:
+    """A warning card for experimental (synthesis) data."""
+    message = (
+        "WARNING: Experimental information represents synthesis attempts only. "
+        "Target formula not guaranteed as product."
+    )
+    
+    return html.Div(
+        [
+            dbc.Alert(
+                message,
+                color="warning",
+                className="mt-4 text-center",
+            )
+        ]
+    )
+
 def generate_experiment_content(raw_data):
     """Generate dashboard content for an experiment"""
     if not raw_data:
@@ -1048,6 +1065,7 @@ def generate_experiment_content(raw_data):
 
     return html.Div(
         [
+            experimental_warning_card(),
             get_sample_id_card(raw_data),
             get_element_composition_card(raw_data),
             get_precursor_card(raw_data),
